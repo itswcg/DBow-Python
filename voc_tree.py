@@ -78,7 +78,7 @@ def constructTree(K, L, data):
                         d = des.tolist()
 
                         childPos = findChild(K,clust.i,x)
-                        f.writelines('{} {} {} {}'.format(clust.i, 1, ' '.join(str(i) for i in d), 0))
+                        f.writelines('{} {} {} {}'.format(clust.i, 1, ' '.join(str(i) for i in d), 1))
                         f.write('\n')
                         treeArray[childPos].inverted_index = {}
                         treeArray[childPos].cen = center[x,:]
@@ -98,4 +98,5 @@ def constructTree(K, L, data):
                     treeArray[childPos].inverted_index = {}
 
     # print "num leafs: " + str(NUM_LEAFS)
+    print 'save orb.txt ... done'
     return treeArray

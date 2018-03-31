@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 
 class KMeansClassifier():
-    "this is a k-means classifier"
-
+    """
+    Kmeans聚类
+    """
     def __init__(self, k=3, initCent='random', max_iter=500 ):
 
         self._k = k

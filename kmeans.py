@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import numpy as np
+import warnings
 
 class KMeansClassifier():
     """
@@ -84,7 +85,9 @@ class KMeansClassifier():
                 index_all = self._clusterAssment[:,0] #取出样本所属簇的索引值
                 value = np.nonzero(index_all==i) #取出所有属于第i个簇的索引值
                 ptsInClust = data_X[value[0]]    #取出属于第i个簇的所有样本点
-                self._centroids[i,:] = np.mean(ptsInClust, axis=0) #计算均值
+                with warnings.catch_warnings():
+                    warnings.simplefilter("ignore", category=RuntimeWarning)
+                    self._centroids[i,:] = np.mean(ptsInClust, axis=0) #计算均值
 
         self._labels = self._clusterAssment[:,0]
         self._sse = sum(self._clusterAssment[:,1])

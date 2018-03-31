@@ -57,19 +57,19 @@ def constructTree(K, L, data):
             if K <= len(clust.data):
                 # opencv实现
 
-                # compactness, label, center=cv2.kmeans(clust.data,
-                #                                      K,
-                #                                      None,
-                #                                      criteria,
-                #                                      10,
-                #                                      cv2.KMEANS_RANDOM_CENTERS)
+                compactness, label, center=cv2.kmeans(clust.data,
+                                                     K,
+                                                     None,
+                                                     criteria,
+                                                     10,
+                                                     cv2.KMEANS_RANDOM_CENTERS)
 
                 # kmeans实现
 
-                clf = KMeansClassifier(K)
-                clf.fit(clust.data)
-                center = clf._centroids
-                label = clf._labels
+                # clf = KMeansClassifier(K)
+                # clf.fit(clust.data)
+                # center = clf._centroids
+                # label = clf._labels
 
                 if clust.l+1 != L:
                     # print "NOT LEAF"
@@ -78,9 +78,17 @@ def constructTree(K, L, data):
                         d = des.tolist()
 
                         childPos = findChild(K,clust.i,x)
+
+                        # opencv
                         queue.appendleft(Cluster(childPos,
                                                  clust.l+1,
                                                  clust.data[label.ravel()==x]))
+
+                        # kmeans
+                        # queue.appendleft(Cluster(childPos,
+                        #                          clust.l+1,
+                        #                          clust.data[label==x]))
+
                         treeArray[childPos].cen = center[x,:]
 
                         f.writelines('{} {} {} {}'.format(clust.i, 0, ' '.join(str(i) for i in d), 0))

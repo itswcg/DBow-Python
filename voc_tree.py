@@ -47,7 +47,7 @@ def constructTree(K, L, data):
     queue = deque() #采用队列
     queue.appendleft( Cluster(0,0,data) )
     with open('orb.txt', 'w') as f: #保存txt文件
-        f.writelines('{} {}  0 0'.format(K, L))
+        f.writelines('{} {}  0 3'.format(K, L))
         f.write('\n')
 
         while len(queue):

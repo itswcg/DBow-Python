@@ -118,6 +118,9 @@ class Tree(object):
         num_nodes = len(self.treeArray)
         num_leafs = self.K ** self.L
         for lf in range(num_nodes-1, num_nodes-num_leafs-1, -1):
+            # print self.treeArray[lf].inverted_index
+            if self.treeArray[lf].inverted_index is None:
+                continue
             if imageID in self.treeArray[lf].inverted_index:
                 vecList.append(self.treeArray[lf].inverted_index[imageID])
             else:

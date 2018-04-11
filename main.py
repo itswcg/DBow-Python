@@ -29,6 +29,7 @@ print tree.transform(1)
 # print tree.imageIDs, tree.dbLengths
 
 matcher = Matcher(N, image_descriptors, tree)
+# print matcher.query(4)
 
 # 比较
 print "compute cosine similarity:"

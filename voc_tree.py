@@ -180,7 +180,7 @@ def constructTree(K, L, data):
 
     queue = deque() #采用队列
     queue.appendleft( Cluster(0,0,data) )
-    with open('orb.txt', 'w') as f: #保存txt文件
+    with open('voc.txt', 'w') as f: #保存txt文件
         f.writelines('{} {}  0 3'.format(K, L))
         f.write('\n')
 
@@ -205,7 +205,7 @@ def constructTree(K, L, data):
                 # center = clf._centroids
                 # label = clf._labels
 
-                if clust.l+1 != L:
+                if clust.l+1 < L:
                     # print "NOT LEAF"
                     for x in range(0,K):
                         des = center[x].astype(int)
@@ -257,5 +257,5 @@ def constructTree(K, L, data):
                     treeArray[childPos].inverted_index = {}
 
     print "num leafs: " + str(NUM_LEAFS)
-    print 'save orb.txt ... done'
+    print 'save voc.txt ... done'
     return treeArray

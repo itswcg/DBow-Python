@@ -5,9 +5,10 @@ import numpy as np
 from collections import deque
 from kmeans import KMeansClassifier
 
+
 class Cluster(object):
     """
-    聚类中心
+    聚类中心类
     """
     def __init__(self, i, l, data):
         self.i = i #节点id
@@ -27,24 +28,19 @@ class Node(object):
 
 class Tree(object):
     """
-    Hierarchical k-means tree.
-        C: num children per node
-        L: num levels in tree (root node not included)
-        treeArray: 1-d array of node objects
+    树类
     """
-
     def __init__(self, K, L, treeArray):
         self.treeArray = treeArray
-        self.L = L # levels in tree
-        self.K = K # branching factor: children per internal node
-        self.N = 0 # num images contributing to tree
-        self.imageIDs = []
-        self.dbLengths = {}
+        self.L = L
+        self.K = K
+        self.N = 0 # 图片的数量
+        self.imageIDs = [] # 图片的id
+        self.dbLengths = {} # 图片对应的tf-idf值
 
     def build_tree(self, N, db_descriptors):
         """
-        db_names: list of image names
-        db_descriptors: list of db image feature descriptors
+        建树
         """
         f_i = 0
         for i in range(N):
@@ -54,23 +50,21 @@ class Tree(object):
 
     def propagate(self, pt):
         """
-        propogate a feature descriptor (pt) down the tree until
-        reaching leaf node. Path down tree is dictated by euclidean
-        distance between pt and cluster centroids (tree nodes).
-        Array index of leaf node is returned (i).
+        计算特征点到节点的距离
+        返回距离最近的叶子节点i
         """
-        i = 0 # initialize position to top node
-        l = 0 # initialize position to top level
+        i = 0 # 初始化节点id
+        l = 0 # 初始化树的深度
         closeChild = 0
         while l != self.L:
-            curDist = np.inf
+            curDist = np.inf # 最小
             minDist = np.inf
             for x in range(0,self.K):
                 childPos = findChild(self.K,i,x)
                 testPT = self.treeArray[childPos].cen
                 if testPT is None:
                     continue
-                # euclidean distance between child x and pt
+                # 计算欧几里得距离
                 curDist = np.linalg.norm(testPT - pt)
                 if curDist < minDist:
                     minDist = curDist
@@ -81,42 +75,45 @@ class Tree(object):
 
     def fill_tree(self, imageID, features):
         """
-        updates inverted indexes with imageID and corresponding features
+        填充反向索引
+        叶子节点的反向索引字典包含图片id以及对应的出现的次数
         """
         for feat in features:
-            # quantize feat to leaf node
             leaf_node = self.propagate(feat)
-            # add to inverted index
+            # 增加反向索引
             if imageID not in self.treeArray[leaf_node].inverted_index:
                 self.treeArray[leaf_node].inverted_index[imageID] = 1
             else:
                 self.treeArray[leaf_node].inverted_index[imageID] += 1
-        self.N += 1 # increase num images contributing to tree
+        self.N += 1 # 增加图片的数量
         self.imageIDs.append(imageID)
 
     def set_lengths(self):
         """
-        find database image vector lengths (used in score normalization)
+        图片id对应的tf-idf值
+        用于查询
         """
-        # process db vector lengths:
         num_nodes = len(self.treeArray)
         num_leafs = self.K ** self.L
         for imageID in self.imageIDs:
             cum_sum = float(0)
-            # iterate over only leaf nodes:
+            # 只迭代叶子节点
             for lf in range(num_nodes-1, num_nodes-num_leafs-1, -1):
                 if self.treeArray[lf].inverted_index == None:
                     continue
                 if imageID in self.treeArray[lf].inverted_index:
-                    # tf is frequency of lf in imageID
+                    # tf是lf单词在图像中的词频
                     tf = self.treeArray[lf].inverted_index[imageID]
-                    # df is num images containing lf visual word
+                    # df是包含lf单词的图片数量
                     df = len(self.treeArray[lf].inverted_index)
                     idf = math.log( float(self.N) / float(df) )
                     cum_sum += math.pow( tf*idf , 2)
             self.dbLengths[imageID] = math.sqrt( cum_sum )
 
     def transform(self, imageID):
+        """
+        把图像转换为单词向量
+        """
         vecList = []
         num_nodes = len(self.treeArray)
         num_leafs = self.K ** self.L
@@ -128,18 +125,17 @@ class Tree(object):
         vec = np.array(vecList)
         return vec
 
-
     def process_query(self, features, n):
         """
-        features: list of features in query image
-        n: return top n scores
+        查询图像库
+        返回得分最高的n幅图像
         """
-        scores = {} # dict of imageID to score
+        scores = {}
         for feat in features:
             leaf_node = self.propagate(feat)
             idx = self.treeArray[leaf_node].inverted_index.items()
             for (ID,count) in idx:
-                df = len(idx) # document frequency in inverted index
+                df = len(idx)
                 idf = math.log( float(self.N) / float(df) )
                 idf_sq = idf * idf
                 tf  = count
@@ -148,15 +144,12 @@ class Tree(object):
                     scores[ID] = score
                 else:
                     scores[ID] += score
-        # normalize scores by scaling by norm of db vectors
         scores = scores.items()
-        final_scores = [] # TODO: change this to a heap so it can sort by score
+        final_scores = []
         for i in range(len(scores)):
             (ID,score) = scores[i]
             nmz_score = float(score) / float(self.dbLengths[ID])
-            # TODO: change this to push onto heap so we can auto sort
             final_scores.append((ID, nmz_score))
-        # sort final scores and return
         final_scores.sort(key=lambda pair : pair[1], reverse=True)
         return final_scores[0:n]
 
@@ -166,6 +159,7 @@ def findChild(K, i, x):
     返回节点i的第x个节点
     """
     return (K*(i+1)-(K-2)+x-1)
+
 
 def constructTree(K, L, data):
     """
@@ -259,6 +253,6 @@ def constructTree(K, L, data):
                 else:
                     treeArray[childPos].inverted_index = {}
 
-    # print "num leafs: " + str(NUM_LEAFS)
+    print "num leafs: " + str(NUM_LEAFS)
     print 'save orb.txt ... done'
     return treeArray

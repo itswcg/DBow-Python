@@ -24,11 +24,14 @@ FEATS = np.vstack(FEATS) #将特征转化为np的数组
 treeArray = constructTree(K, L, np.vstack(FEATS)) #建立字典树，并打印结果
 tree = Tree(K, L, treeArray)
 tree.build_tree(N, image_descriptors)
+print "the vector of image:"
 print tree.transform(1)
 # print tree.imageIDs, tree.dbLengths
 
 matcher = Matcher(N, image_descriptors, tree)
 
+# 比较
+print "compute cosine similarity:"
 for i in range(N):
     for j in range(N):
         print 'Image {} vs Image {}: {}'.format(i, j, matcher.cos_sim(tree.transform(i), tree.transform(j)))

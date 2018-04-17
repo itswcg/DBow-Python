@@ -24,3 +24,12 @@ def orb_features(n):
         descriptors.append(descriptor)
 
     return descriptors
+
+
+def update_image(n):
+    orb = cv2.ORB_create(5)
+    img = cv2.imread('images/{0}.png'.format(n), 0)
+    keypoint, descriptor = orb.detectAndCompute(img, None)
+    descriptor = descriptor.astype(int)
+    descriptor = descriptor.tolist()
+    return descriptor

@@ -48,6 +48,9 @@ class Tree(object):
             f_i += 1
         self.set_lengths()
 
+    def update_tree(self, n, des):
+        self.fill_tree(n, des)
+
     def propagate(self, pt):
         """
         计算特征点到节点的距离

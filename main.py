@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import cv2
 import numpy as np
-from orb import orb_features
+from orb import orb_features, update_image
 from voc_tree import constructTree
 from matcher import *
 
@@ -9,6 +9,7 @@ from matcher import *
 N = 10 #图片的数量
 K = 5 #聚类K类
 L = 3 #字典树L层
+n = 10 #增加的图片
 
 image_descriptors = orb_features(N) #提取特征
 # print image_descriptors
@@ -31,9 +32,12 @@ print tree.transform(1)
 matcher = Matcher(N, image_descriptors, tree)
 # print matcher.query(4)
 
+# add images
+des = update_image(n)
+tree.update_tree(n, des)
+
 # 比较
 print "compute cosine similarity:"
-for i in range(N):
-    for j in range(N):
-        print 'Image {} vs Image {}: {}'.format(i, j, matcher.cos_sim(tree.transform(i), tree.transform(j)))
+for i in range(tree.N):
+    print 'Image {} vs Image {}: {}'.format(n, i, matcher.cos_sim(tree.transform(n), tree.transform(i)))
 

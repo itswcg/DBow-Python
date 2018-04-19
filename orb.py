@@ -27,7 +27,7 @@ def orb_features(n):
 
 
 def update_image(n):
-    orb = cv2.ORB_create(5)
+    orb = cv2.ORB_create(500)
     img = cv2.imread('images/{0}.png'.format(n), 0)
     keypoint, descriptor = orb.detectAndCompute(img, None)
     descriptor = descriptor.astype(int)

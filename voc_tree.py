@@ -36,7 +36,6 @@ class Tree(object):
         self.K = K
         self.N = 0 # 图片的数量
         self.imageIDs = [] # 图片的id
-        self.dbLengths = {} # 图片对应的tf-idf值
 
     def build_tree(self, N, db_descriptors):
         """
@@ -91,27 +90,6 @@ class Tree(object):
         self.N += 1 # 增加图片的数量
         self.imageIDs.append(imageID)
 
-    def set_lengths(self):
-        """
-        图片id对应的tf-idf值
-        用于查询
-        """
-        num_nodes = len(self.treeArray)
-        num_leafs = self.K ** self.L
-        for imageID in self.imageIDs:
-            cum_sum = float(0)
-            # 只迭代叶子节点
-            for lf in range(num_nodes-1, num_nodes-num_leafs-1, -1):
-                if self.treeArray[lf].inverted_index == None:
-                    continue
-                if imageID in self.treeArray[lf].inverted_index:
-                    # tf是lf单词在图像中的词频
-                    tf = self.treeArray[lf].inverted_index[imageID]
-                    # df是包含lf单词的图片数量
-                    df = len(self.treeArray[lf].inverted_index)
-                    idf = math.log( float(self.N) / float(df) )
-                    cum_sum += math.pow( tf*idf , 2)
-            self.dbLengths[imageID] = math.sqrt( cum_sum )
 
     def transform(self, imageID):
         """

@@ -26,8 +26,8 @@ FEATS = np.vstack(FEATS) #将特征转化为np的数组
 treeArray = constructTree(K, L, np.vstack(FEATS)) #建立字典树，并打印结果
 tree = Tree(K, L, treeArray)
 # tree.build_tree(N, image_descriptors)
-print "the vector of image:"
-print tree.transform(0)
+# print "the vector of image:"
+# print tree.transform(2)
 # print tree.imageIDs, tree.dbLengths
 
 matcher = Matcher(N, image_descriptors, tree)

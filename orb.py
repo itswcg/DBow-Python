@@ -11,10 +11,10 @@ def orb_features(n):
     print 'reading images ...'
 
     descriptors = []
-    orb = cv2.ORB_create(500) #表示提取一幅图像的n个特征, 如需生成字典文件，改为10000
+    orb = cv2.ORB_create(10000) #表示提取一幅图像的n个特征, 如需生成字典文件，改为10000
 
     for i in range(n):
-        img = cv2.imread('images/{0}.png'.format(i), 0)
+        img = cv2.imread('images_2/{0}.png'.format(i), 0)
         keypoint, descriptor = orb.detectAndCompute(img, None)
         #特征转int型
         # print descriptor

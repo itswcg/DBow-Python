@@ -65,3 +65,268 @@ k=11,l=5 24266
 
 ros
 原始 
+
+以k=5, l=3 做试验
+[ 0  1  0  0  0  0  0  3  0  2  4  4  1  2  0  1  3  1  5  0  4  0  0  8
+  0  0  1  0  0  0  1 34 17 29 26  5  0  7  0  6  2 11  0  0  1 41  1 15
+  0  3  0  1  0  0  0  1  0  0  0  0  0  1  0  0  1  4  2  0  0 14  0  0
+  0  0  0  0  1  0  0  1  3  1  0  0  1  0  0  0  0  2  0  1  2  1  1  1
+  1  0  0  2 22 10 17  7 17  0  5  1  7  0  0  2  0  0  0  1  1  7  0 13
+ 22 20  0 58  9]
+
+reading images ...
+building tree: K = 5, L = 3
+num leafs: 125
+save voc.txt ... done
+0.jpg compute cosine similarity:
+None
+1.jpg compute cosine similarity:
+Image 1 vs Image 0: 0.839104447249
+None
+2.jpg compute cosine similarity:
+Image 2 vs Image 0: 0.577093193372
+Image 2 vs Image 1: 0.732347281852
+None
+3.jpg compute cosine similarity:
+Image 3 vs Image 0: 0.577154345516
+Image 3 vs Image 1: 0.717158092132
+Image 3 vs Image 2: 0.879340087088
+None
+4.jpg compute cosine similarity:
+Image 4 vs Image 0: 0.569629433495
+Image 4 vs Image 1: 0.699364373205
+Image 4 vs Image 2: 0.867473244529
+Image 4 vs Image 3: 0.92558846655
+None
+5.jpg compute cosine similarity:
+Image 5 vs Image 0: 0.57616829743
+Image 5 vs Image 1: 0.706892479372
+Image 5 vs Image 2: 0.842896580607
+Image 5 vs Image 3: 0.900604398185
+Image 5 vs Image 4: 0.935869893514
+None
+6.jpg compute cosine similarity:
+Image 6 vs Image 0: 0.558089842533
+Image 6 vs Image 1: 0.678132719158
+Image 6 vs Image 2: 0.810373433977
+Image 6 vs Image 3: 0.909500556968
+Image 6 vs Image 4: 0.913569903022
+Image 6 vs Image 5: 0.904758234962
+None
+7.jpg compute cosine similarity:
+Image 7 vs Image 0: 0.565961059374
+Image 7 vs Image 1: 0.693135264797
+Image 7 vs Image 2: 0.840392543506
+Image 7 vs Image 3: 0.923415205563
+Image 7 vs Image 4: 0.904966769003
+Image 7 vs Image 5: 0.921686746988
+Image 7 vs Image 6: 0.922320401522
+None
+8.jpg compute cosine similarity:
+Image 8 vs Image 0: 0.547591450436
+Image 8 vs Image 1: 0.693678433139
+Image 8 vs Image 2: 0.881897010807
+Image 8 vs Image 3: 0.878644983495
+Image 8 vs Image 4: 0.876221634162
+Image 8 vs Image 5: 0.848931112396
+Image 8 vs Image 6: 0.861506309781
+Image 8 vs Image 7: 0.860231288465
+None
+9.jpg compute cosine similarity:
+Image 9 vs Image 0: 0.562284911629
+Image 9 vs Image 1: 0.668006638106
+Image 9 vs Image 2: 0.733088260595
+Image 9 vs Image 3: 0.837568351889
+Image 9 vs Image 4: 0.83856777745
+Image 9 vs Image 5: 0.842436453226
+Image 9 vs Image 6: 0.87036225348
+Image 9 vs Image 7: 0.872549071074
+Image 9 vs Image 8: 0.809043488734
+None
+10.jpg compute cosine similarity:
+Image 10 vs Image 0: 0.793190200901
+Image 10 vs Image 1: 0.791807149131
+Image 10 vs Image 2: 0.623268425305
+Image 10 vs Image 3: 0.633372149864
+Image 10 vs Image 4: 0.647277797206
+Image 10 vs Image 5: 0.61568450329
+Image 10 vs Image 6: 0.620745956279
+Image 10 vs Image 7: 0.609237688865
+Image 10 vs Image 8: 0.6243630614
+Image 10 vs Image 9: 0.67999405468
+None
+11.jpg compute cosine similarity:
+Image 11 vs Image 0: 0.689813202321
+Image 11 vs Image 1: 0.869728259356
+Image 11 vs Image 2: 0.793688340423
+Image 11 vs Image 3: 0.795860852003
+Image 11 vs Image 4: 0.815918010085
+Image 11 vs Image 5: 0.802255907495
+Image 11 vs Image 6: 0.786293046946
+Image 11 vs Image 7: 0.788259821139
+Image 11 vs Image 8: 0.791454077629
+Image 11 vs Image 9: 0.76551661059
+Image 11 vs Image 10: 0.8124709232
+None
+12.jpg compute cosine similarity:
+Image 12 vs Image 0: 0.567605249512
+Image 12 vs Image 1: 0.710668956612
+Image 12 vs Image 2: 0.902758255961
+Image 12 vs Image 3: 0.869196837517
+Image 12 vs Image 4: 0.89353037736
+Image 12 vs Image 5: 0.887355303385
+Image 12 vs Image 6: 0.849829605313
+Image 12 vs Image 7: 0.859126981681
+Image 12 vs Image 8: 0.883397561311
+Image 12 vs Image 9: 0.795114574735
+Image 12 vs Image 10: 0.648024770112
+Image 12 vs Image 11: 0.837828816091
+None
+13.jpg compute cosine similarity:
+Image 13 vs Image 0: 0.574645258789
+Image 13 vs Image 1: 0.724281301401
+Image 13 vs Image 2: 0.902771430468
+Image 13 vs Image 3: 0.87623877687
+Image 13 vs Image 4: 0.877218977851
+Image 13 vs Image 5: 0.857918959361
+Image 13 vs Image 6: 0.847146408612
+Image 13 vs Image 7: 0.852634875723
+Image 13 vs Image 8: 0.894417189706
+Image 13 vs Image 9: 0.795694009803
+Image 13 vs Image 10: 0.646860406743
+Image 13 vs Image 11: 0.83728102969
+Image 13 vs Image 12: 0.947731624834
+None
+14.jpg compute cosine similarity:
+Image 14 vs Image 0: 0.545586818004
+Image 14 vs Image 1: 0.672360483803
+Image 14 vs Image 2: 0.771250460566
+Image 14 vs Image 3: 0.843139504718
+Image 14 vs Image 4: 0.85530014368
+Image 14 vs Image 5: 0.86396755713
+Image 14 vs Image 6: 0.870701030786
+Image 14 vs Image 7: 0.851031715035
+Image 14 vs Image 8: 0.857229470018
+Image 14 vs Image 9: 0.872465617912
+Image 14 vs Image 10: 0.644256245947
+Image 14 vs Image 11: 0.771144428035
+Image 14 vs Image 12: 0.860527915876
+Image 14 vs Image 13: 0.834350651259
+None
+15.jpg compute cosine similarity:
+Image 15 vs Image 0: 0.548750763318
+Image 15 vs Image 1: 0.673694263949
+Image 15 vs Image 2: 0.796630721944
+Image 15 vs Image 3: 0.84984044013
+Image 15 vs Image 4: 0.864187401935
+Image 15 vs Image 5: 0.872248865472
+Image 15 vs Image 6: 0.861607338213
+Image 15 vs Image 7: 0.857760566662
+Image 15 vs Image 8: 0.843235964593
+Image 15 vs Image 9: 0.868400648249
+Image 15 vs Image 10: 0.650444166768
+Image 15 vs Image 11: 0.769064236374
+Image 15 vs Image 12: 0.845637805588
+Image 15 vs Image 13: 0.837467974854
+Image 15 vs Image 14: 0.878545921322
+None
+16.jpg compute cosine similarity:
+Image 16 vs Image 0: 0.827551852911
+Image 16 vs Image 1: 0.762047152286
+Image 16 vs Image 2: 0.596488064838
+Image 16 vs Image 3: 0.609528831134
+Image 16 vs Image 4: 0.602483530266
+Image 16 vs Image 5: 0.595212848308
+Image 16 vs Image 6: 0.590850249878
+Image 16 vs Image 7: 0.602444203876
+Image 16 vs Image 8: 0.585641473153
+Image 16 vs Image 9: 0.65294501705
+Image 16 vs Image 10: 0.914025180787
+Image 16 vs Image 11: 0.757448091701
+Image 16 vs Image 12: 0.611821883359
+Image 16 vs Image 13: 0.611339017611
+Image 16 vs Image 14: 0.61392088749
+Image 16 vs Image 15: 0.622810403876
+None
+17.jpg compute cosine similarity:
+Image 17 vs Image 0: 0.566636182983
+Image 17 vs Image 1: 0.713810733727
+Image 17 vs Image 2: 0.876442410986
+Image 17 vs Image 3: 0.879295699209
+Image 17 vs Image 4: 0.871292424227
+Image 17 vs Image 5: 0.867454107657
+Image 17 vs Image 6: 0.862443669543
+Image 17 vs Image 7: 0.861895978298
+Image 17 vs Image 8: 0.868858563964
+Image 17 vs Image 9: 0.825582250421
+Image 17 vs Image 10: 0.639616297109
+Image 17 vs Image 11: 0.789591696238
+Image 17 vs Image 12: 0.892553709116
+Image 17 vs Image 13: 0.900496237235
+Image 17 vs Image 14: 0.820488531696
+Image 17 vs Image 15: 0.823205258869
+Image 17 vs Image 16: 0.612089707664
+None
+18.jpg compute cosine similarity:
+Image 18 vs Image 0: 0.564668729179
+Image 18 vs Image 1: 0.710620089007
+Image 18 vs Image 2: 0.822425959961
+Image 18 vs Image 3: 0.85452336712
+Image 18 vs Image 4: 0.855443524526
+Image 18 vs Image 5: 0.862922454903
+Image 18 vs Image 6: 0.864213208229
+Image 18 vs Image 7: 0.878326633804
+Image 18 vs Image 8: 0.850870789582
+Image 18 vs Image 9: 0.868582251568
+Image 18 vs Image 10: 0.655124871314
+Image 18 vs Image 11: 0.792634672537
+Image 18 vs Image 12: 0.832905521763
+Image 18 vs Image 13: 0.823188679124
+Image 18 vs Image 14: 0.853455178266
+Image 18 vs Image 15: 0.87053806556
+Image 18 vs Image 16: 0.615015598305
+Image 18 vs Image 17: 0.823622212535
+None
+19.jpg compute cosine similarity:
+Image 19 vs Image 0: 0.586861657192
+Image 19 vs Image 1: 0.720780087624
+Image 19 vs Image 2: 0.853554129873
+Image 19 vs Image 3: 0.877683368547
+Image 19 vs Image 4: 0.877313512687
+Image 19 vs Image 5: 0.859784184742
+Image 19 vs Image 6: 0.862501826276
+Image 19 vs Image 7: 0.86581408728
+Image 19 vs Image 8: 0.879685019833
+Image 19 vs Image 9: 0.839609026953
+Image 19 vs Image 10: 0.681181170812
+Image 19 vs Image 11: 0.819308275812
+Image 19 vs Image 12: 0.879928186714
+Image 19 vs Image 13: 0.865168578282
+Image 19 vs Image 14: 0.857482011337
+Image 19 vs Image 15: 0.860380681812
+Image 19 vs Image 16: 0.644914984504
+Image 19 vs Image 17: 0.845364117456
+Image 19 vs Image 18: 0.879592693017
+None
+20.jpg compute cosine similarity:
+Image 20 vs Image 0: 1.0
+Image 20 vs Image 1: 0.839104447249
+Image 20 vs Image 2: 0.577093193372
+Image 20 vs Image 3: 0.577154345516
+Image 20 vs Image 4: 0.569629433495
+Image 20 vs Image 5: 0.57616829743
+Image 20 vs Image 6: 0.558089842533
+Image 20 vs Image 7: 0.565961059374
+Image 20 vs Image 8: 0.547591450436
+Image 20 vs Image 9: 0.562284911629
+Image 20 vs Image 10: 0.793190200901
+Image 20 vs Image 11: 0.689813202321
+Image 20 vs Image 12: 0.567605249512
+Image 20 vs Image 13: 0.574645258789
+Image 20 vs Image 14: 0.545586818004
+Image 20 vs Image 15: 0.548750763318
+Image 20 vs Image 16: 0.827551852911
+Image 20 vs Image 17: 0.566636182983
+Image 20 vs Image 18: 0.564668729179
+Image 20 vs Image 19: 0.586861657192
+相似度最高的图片为0.jpg

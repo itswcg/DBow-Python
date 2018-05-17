@@ -6,11 +6,11 @@ from voc_tree import constructTree
 from matcher import *
 
 
-N = 25 #图片的数量
-K = 10 #聚类K类
-L = 5 #字典树L层
-n = 20 #增加的图片
-T = 0.9 #相似度阈值
+N = 10 #训练字典图片的数量
+K = 5 #聚类K类
+L = 3 #字典树L层
+n = 21 #测试的图片的数量
+T = 1 #相似度阈值
 
 image_descriptors = orb_features(N) #提取特征
 # print image_descriptors
@@ -30,26 +30,27 @@ tree = Tree(K, L, treeArray)
 # print tree.transform(2)
 # print tree.imageIDs, tree.dbLengths
 
-# matcher = Matcher(N, image_descriptors, tree)
-# # print matcher.query(4)
+matcher = Matcher(N, image_descriptors, tree)
+# print matcher.query(4)
 
-# # add images
+# add images
 
-# for i in range(n):
-#     des = update_image(i)
-#     tree.update_tree(i, des)
-# #    print tree.transform(10)
-# # print tree.imageIDs
+for i in range(n):
+    des = update_image(i)
+    tree.update_tree(i, des)
+# print tree.imageIDs
 
-# # 比较
-#     print "{}.jpg compute cosine similarity:".format(i)
-#     res = {}
-#     for j in range(tree.N-1):
-#         print 'Image {} vs Image {}: {}'.format(i, j, matcher.cos_sim(tree.transform(i), tree.transform(j)))
-#         if matcher.cos_sim(tree.transform(i), tree.transform(j)) > T:
-#             res[j] = matcher.cos_sim(tree.transform(i), tree.transform(j))
-#     if res:
-#         r = max(res.items(), key=lambda x:x[1])[0]
-#         print ("相似度最高的图片为{}.jpg".format(r))
-#     else:
-#         print("None")
+# 比较
+    print "{}.jpg compute cosine similarity:".format(i)
+    res = {}
+    for j in range(tree.N-1):
+        print 'Image {} vs Image {}: {}'.format(i, j, matcher.cos_sim(tree.transform(i), tree.transform(j)))
+        if matcher.cos_sim(tree.transform(i), tree.transform(j)) >= T:
+            res[j] = matcher.cos_sim(tree.transform(i), tree.transform(j))
+    if res:
+        r = max(res.items(), key=lambda x:x[1])[0]
+        print ("相似度最高的图片为{}.jpg".format(r))
+    else:
+        print("None")
+
+print tree.transform(0)

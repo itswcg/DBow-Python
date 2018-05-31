@@ -50,7 +50,7 @@ for i in range(n):
     if res:
         r = max(res.items(), key=lambda x:x[1])[0]
         print ("相似度最高的图片为{}.jpg".format(r))
+        print tree.transform(r)
     else:
         print("None")
 
-print tree.transform(0)

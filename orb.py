@@ -28,15 +28,15 @@ def orb_features(n):
 
 def update_image(n):
     orb = cv2.ORB_create(500)
-    img = cv2.imread('images_2/{0}.png'.format(n), 0)
+    img = cv2.imread('images_0/{0}.png'.format(n), 0)
     keypoint, descriptor = orb.detectAndCompute(img, None)
     descriptor = descriptor.astype(int)
     descriptor = descriptor.tolist()
     return descriptor
 
 if __name__ == '__main__':
-    img1=cv2.imread('images/1-1.png', cv2.IMREAD_GRAYSCALE)
-    img2=cv2.imread('images/1-2.png', cv2.IMREAD_GRAYSCALE)
+    img1=cv2.imread('images_0/12.png', cv2.IMREAD_GRAYSCALE)
+    img2=cv2.imread('images_0/13.png', cv2.IMREAD_GRAYSCALE)
 
     orb = cv2.ORB_create()
     kp1, des1 = orb.detectAndCompute(img1, None)
@@ -44,5 +44,5 @@ if __name__ == '__main__':
     bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
     matches = bf.match(des1,des2)
     matches = sorted(matches, key=lambda x:x.distance)
-    img3 = cv2.drawMatches(img1, kp1, img2, kp2, matches[:], img2,flags=2)
+    img3 = cv2.drawMatches(img1, kp1, img2, kp2, matches[:40], img2,flags=2)
     plt.imshow(img3), plt.show()

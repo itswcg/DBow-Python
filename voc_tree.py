@@ -10,16 +10,18 @@ class Cluster(object):
     """
     聚类中心类
     """
+
     def __init__(self, i, l, data):
-        self.i = i #节点id
-        self.l = l #在树中的深度
-        self.data = data #聚类点
+        self.i = i  # 节点id
+        self.l = l  # 在树中的深度
+        self.data = data  # 聚类点
 
 
 class Node(object):
     """
     节点类
     """
+
     def __init__(self):
         self.cen = None
         self.index = None
@@ -30,12 +32,13 @@ class Tree(object):
     """
     树类
     """
+
     def __init__(self, K, L, treeArray):
         self.treeArray = treeArray
         self.L = L
         self.K = K
-        self.N = 0 # 图片的数量
-        self.imageIDs = [] # 图片的id
+        self.N = 0  # 图片的数量
+        self.imageIDs = []  # 图片的id
 
     def build_tree(self, N, db_descriptors):
         """
@@ -55,14 +58,14 @@ class Tree(object):
         计算特征点到节点的距离
         返回距离最近的叶子节点i
         """
-        i = 0 # 初始化节点id
-        l = 0 # 初始化树的深度
+        i = 0  # 初始化节点id
+        l = 0  # 初始化树的深度
         closeChild = 0
         while l != self.L:
-            curDist = np.inf # 最小
+            curDist = np.inf  # 最小
             minDist = np.inf
-            for x in range(0,self.K):
-                childPos = findChild(self.K,i,x)
+            for x in range(0, self.K):
+                childPos = findChild(self.K, i, x)
                 testPT = self.treeArray[childPos].cen
                 if testPT is None:
                     continue
@@ -87,9 +90,30 @@ class Tree(object):
                 self.treeArray[leaf_node].inverted_index[imageID] = 1
             else:
                 self.treeArray[leaf_node].inverted_index[imageID] += 1
-        self.N += 1 # 增加图片的数量
+        self.N += 1  # 增加图片的数量
         self.imageIDs.append(imageID)
 
+    def set_lengths(self):
+        """
+        图片id对应的tf-idf值
+        用于查询
+        """
+        num_nodes = len(self.treeArray)
+        num_leafs = self.K ** self.L
+        for imageID in self.imageIDs:
+            cum_sum = float(0)
+            # 只迭代叶子节点
+            for lf in range(num_nodes - 1, num_nodes - num_leafs - 1, -1):
+                if self.treeArray[lf].inverted_index == None:
+                    continue
+                if imageID in self.treeArray[lf].inverted_index:
+                    # tf是lf单词在图像中的词频
+                    tf = self.treeArray[lf].inverted_index[imageID]
+                    # df是包含lf单词的图片数量
+                    df = len(self.treeArray[lf].inverted_index)
+                    idf = math.log(float(self.N) / float(df))
+                    cum_sum += math.pow(tf * idf, 2)
+            self.dbLengths[imageID] = math.sqrt(cum_sum)
 
     def transform(self, imageID):
         """
@@ -98,7 +122,7 @@ class Tree(object):
         vecList = []
         num_nodes = len(self.treeArray)
         num_leafs = self.K ** self.L
-        for lf in range(num_nodes-1, num_nodes-num_leafs-1, -1):
+        for lf in range(num_nodes - 1, num_nodes - num_leafs - 1, -1):
             # print self.treeArray[lf].inverted_index
             if self.treeArray[lf].inverted_index is None:
                 continue
@@ -118,11 +142,11 @@ class Tree(object):
         for feat in features:
             leaf_node = self.propagate(feat)
             idx = self.treeArray[leaf_node].inverted_index.items()
-            for (ID,count) in idx:
+            for (ID, count) in idx:
                 df = len(idx)
-                idf = math.log( float(self.N) / float(df) )
+                idf = math.log(float(self.N) / float(df))
                 idf_sq = idf * idf
-                tf  = count
+                tf = count
                 score = float(tf * idf_sq)
                 if ID not in scores:
                     scores[ID] = score
@@ -131,10 +155,10 @@ class Tree(object):
         scores = scores.items()
         final_scores = []
         for i in range(len(scores)):
-            (ID,score) = scores[i]
+            (ID, score) = scores[i]
             nmz_score = float(score) / float(self.dbLengths[ID])
             final_scores.append((ID, nmz_score))
-        final_scores.sort(key=lambda pair : pair[1], reverse=True)
+        final_scores.sort(key=lambda pair: pair[1], reverse=True)
         return final_scores[0:n]
 
 
@@ -142,7 +166,7 @@ def findChild(K, i, x):
     """
     返回节点i的第x个节点
     """
-    return (K*(i+1)-(K-2)+x-1)
+    return (K * (i + 1) - (K - 2) + x - 1)
 
 
 def constructTree(K, L, data):
@@ -151,7 +175,7 @@ def constructTree(K, L, data):
     """
     print "building tree: K = " + str(K) + ", L = " + str(L)
 
-    NUM_NODES = (K**(L+1)-1)/(K-1) #总节点数
+    NUM_NODES = (K**(L + 1) - 1) / (K - 1)  # 总节点数
 
     treeArray = [Node() for i in range(NUM_NODES)]
     NUM_LEAFS = 0
@@ -159,9 +183,9 @@ def constructTree(K, L, data):
     cv2_iter = cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER
     criteria = (cv2_iter, 10, 1.0)
 
-    queue = deque() #采用队列
-    queue.appendleft( Cluster(0,0,data) )
-    with open('voc.txt', 'w') as f: #保存txt文件
+    queue = deque()  # 采用队列
+    queue.appendleft(Cluster(0, 0, data))
+    with open('voc.txt', 'w') as f:  # 保存txt文件
         f.writelines('{} {}  0 3'.format(K, L))
         f.write('\n')
 
@@ -172,12 +196,12 @@ def constructTree(K, L, data):
             if K <= len(clust.data):
                 # opencv实现
 
-                compactness, label, center=cv2.kmeans(clust.data,
-                                                     K,
-                                                     None,
-                                                     criteria,
-                                                     10,
-                                                     cv2.KMEANS_RANDOM_CENTERS)
+                compactness, label, center = cv2.kmeans(clust.data,
+                                                        K,
+                                                        None,
+                                                        criteria,
+                                                        10,
+                                                        cv2.KMEANS_RANDOM_CENTERS)
 
                 # kmeans实现
 
@@ -186,53 +210,55 @@ def constructTree(K, L, data):
                 # center = clf._centroids
                 # label = clf._labels
 
-                if clust.l+1 < L:
+                if clust.l + 1 < L:
                     # print "NOT LEAF"
-                    for x in range(0,K):
+                    for x in range(0, K):
                         des = center[x].astype(int)
                         d = des.tolist()
 
-                        childPos = findChild(K,clust.i,x)
+                        childPos = findChild(K, clust.i, x)
 
                         # opencv
                         queue.appendleft(Cluster(childPos,
-                                                 clust.l+1,
-                                                 clust.data[label.ravel()==x]))
+                                                 clust.l + 1,
+                                                 clust.data[label.ravel() == x]))
 
                         # kmeans
                         # queue.appendleft(Cluster(childPos,
                         #                          clust.l+1,
                         #                          clust.data[label==x]))
 
-                        treeArray[childPos].cen = center[x,:]
+                        treeArray[childPos].cen = center[x, :]
 
-                        f.writelines('{} {} {} {}'.format(clust.i, 0, ' '.join(str(i) for i in d), 0))
+                        f.writelines('{} {} {} {}'.format(
+                            clust.i, 0, ' '.join(str(i) for i in d), 0))
                         f.write('\n')
 
                 else:
                     # print "LEAF"
-                    for x in range(0,K):
+                    for x in range(0, K):
                         des = center[x].astype(int)
                         d = des.tolist()
 
-                        childPos = findChild(K,clust.i,x)
+                        childPos = findChild(K, clust.i, x)
 
-                        f.writelines('{} {} {} {}'.format(clust.i, 1, ' '.join(str(i) for i in d), 1))
+                        f.writelines('{} {} {} {}'.format(
+                            clust.i, 1, ' '.join(str(i) for i in d), 1))
                         f.write('\n')
 
                         treeArray[childPos].inverted_index = {}
-                        treeArray[childPos].cen = center[x,:]
+                        treeArray[childPos].cen = center[x, :]
                         if clust.data.size == 0:
                             print "ZERO CLUSTER"
                         NUM_LEAFS += 1
             else:
                 x = 0
-                childPos = findChild(K,clust.i,x)
-                treeArray[childPos].cen = np.zeros(len(clust.data[0,:]),
+                childPos = findChild(K, clust.i, x)
+                treeArray[childPos].cen = np.zeros(len(clust.data[0, :]),
                                                    dtype='float32')
-                if clust.l+1 != L:
+                if clust.l + 1 != L:
                     queue.appendleft(Cluster(childPos,
-                                             clust.l+1,
+                                             clust.l + 1,
                                              clust.data))
                 else:
                     treeArray[childPos].inverted_index = {}
